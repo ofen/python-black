@@ -27,12 +27,22 @@ def show_error_panel(text: str):
 
 
 def get_system_info() -> str:
+    """
+    >>> platform.platform()
+    'macOS-11.2.3-arm64-arm-64bit'
+    >>> platform.system()
+    'Darwin'
+    >>> platform.architecture()
+    ('64bit', '')
+    >>> platform.processor()
+    'arm'
+    """
     system_name = platform.system().lower()
-    # macOS 只用64位
-    if system_name == "darwin":
-        return f"{system_name}_x64"
-    architecture = platform.architecture()[0][:2]
-    return f"{system_name}_x{architecture}"
+    bits, _ = platform.architecture()
+    processor = platform.processor()
+    if processor == "arm":
+        return f"{system_name}_{processor}{bits[:2]}"
+    return f"{system_name}_x{bits[:2]}"
 
 
 def get_package_path() -> str:
@@ -96,8 +106,8 @@ def extract(python_black_path: str) -> None:
         if not installed_pkg_md5 or not md5_file:
             raise Exception("Invalid md5")
 
-        with open(md5_file, "r") as f:
-            saved_md5 = f.read()
+        with open(md5_file, "r") as fh:
+            saved_md5 = fh.read()
             if installed_pkg_md5 == saved_md5:
                 # 如果之前保存的 md5 和现在的 md5 一样，说明没有更新，不需要执行下面的代码
                 # 只有在新安装或更新时才需要执行下面的代码
@@ -114,9 +124,9 @@ def extract(python_black_path: str) -> None:
             os.mkdir(python_black_path)
 
         with zipfile.ZipFile(installed_pkg_path, "r") as z:
-            for f in z.namelist():
-                z.extract(f, python_black_path)
+            for name in z.namelist():
+                z.extract(name, python_black_path)
 
         # 将安装或更新的 sublime-package 的 md5 保存到 packages 中
-        with open(md5_file, "w") as f:
-            f.write(installed_pkg_md5)
+        with open(md5_file, "w") as fh:
+            fh.write(installed_pkg_md5)
