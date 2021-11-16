@@ -6,24 +6,23 @@
 # @Created: 2021-03-27 09:55:27
 # @Modified: 2021-06-11 23:45:03
 
-PACKAGE_NAME = "python-black"
-INSTALLED_PACKAGE_NAME = f"{PACKAGE_NAME}.sublime-package"
-SETTINGS_FILE_NAME = "%s.sublime-settings" % PACKAGE_NAME
+PACKAGE_NAME: str = "python-black"
+INSTALLED_PACKAGE_NAME: str = f"{PACKAGE_NAME}.sublime-package"
+SETTINGS_FILE_NAME: str = f"{PACKAGE_NAME}.sublime-settings"
 
-WORKER_TIMEOUT = 0
-WORKER_START_TIMEOUT = 100
-STATUS_MESSAGE_TIMEOUT = 3000
+WORKER_TIMEOUT: int = 0
+WORKER_START_TIMEOUT: int = 100
+STATUS_MESSAGE_TIMEOUT: int = 3000
 
-COMMAND = "black"
-CODE = "-c"
-CONFIG = "--config"
+COMMAND: str = "black"
+CODE: str = "-c"
+CONFIG: str = "--config"
 
-TIMEOUT = 0
-FORMAT_TIMEOUT = 100
-STATUS_MESSAGE_TIMEOUT = 3000
+TIMEOUT: int = 0
+FORMAT_TIMEOUT: int = 100
 
-CONFIGURATION_FILENAME = "pyproject.toml"
-CONFIGURATION_CONTENTS = """[tool.black]
+CONFIGURATION_FILENAME: str = "pyproject.toml"
+CONFIGURATION_CONTENTS: str = """[tool.black]
 line-length = 120
 target-version = ['py38']
 include = '\\.pyi?\\$'

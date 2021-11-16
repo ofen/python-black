@@ -6,18 +6,18 @@
 # @Created: 2021-03-27 09:55:27
 # @Modified: 2021-10-05 22:29:12
 
-import sublime
 import os
 import sys
 import subprocess
 import locale
 import difflib
 
-
 from io import StringIO
 from typing import Any, List, Optional
 from collections import namedtuple
 from .constants import STATUS_MESSAGE_TIMEOUT
+
+import sublime
 
 
 ViewState = namedtuple("ViewState", ["row", "col", "vector"])

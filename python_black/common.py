@@ -7,15 +7,15 @@
 # @Modified: 2021-10-05 22:29:29
 
 from typing import Optional
-import sublime
 import os
 import sys
-import platform
 import zipfile
 import shutil
 import hashlib
 
 from .constants import PACKAGE_NAME, INSTALLED_PACKAGE_NAME
+
+import sublime
 
 
 def show_error_panel(text: str):
@@ -27,22 +27,10 @@ def show_error_panel(text: str):
 
 
 def get_system_info() -> str:
-    """
-    >>> platform.platform()
-    'macOS-11.2.3-arm64-arm-64bit'
-    >>> platform.system()
-    'Darwin'
-    >>> platform.architecture()
-    ('64bit', '')
-    >>> platform.processor()
-    'arm'
-    """
-    system_name = platform.system().lower()
-    bits, _ = platform.architecture()
-    processor = platform.processor()
-    if processor == "arm":
-        return f"{system_name}_{processor}{bits[:2]}"
-    return f"{system_name}_x{bits[:2]}"
+    system_name = sublime.platform().lower()
+    arch = sublime.arch().lower()
+
+    return f"{system_name}_{arch}"
 
 
 def get_package_path() -> str:
@@ -51,7 +39,7 @@ def get_package_path() -> str:
     return python_black_path
 
 
-def append_third_lib(python_black_path: str):
+def append_third_party_lib(python_black_path: str):
     """添加项目中的依赖到系统环境中"""
     third_libs_path = os.path.join(python_black_path, "lib")
 

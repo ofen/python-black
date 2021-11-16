@@ -6,15 +6,15 @@
 # @Created: 2021-03-27 09:55:27
 # @Modified: 2021-06-11 23:37:37
 
-import sublime
-import sublime_plugin
-
 
 from os import path
 from typing import List
 
 from .python_black.constants import SETTINGS_FILE_NAME, CONFIGURATION_FILENAME, CONFIGURATION_CONTENTS
 from .python_black.utils import black_format
+
+import sublime
+import sublime_plugin
 
 
 class BlackCommand(sublime_plugin.TextCommand):
@@ -107,9 +107,9 @@ class BlackOutputCommand(sublime_plugin.TextCommand):
 
 
 def plugin_loaded():
-    from .python_black.common import get_package_path, extract, append_third_lib
+    from .python_black.common import get_package_path, extract, append_third_party_lib  # type: ignore
 
     package_path = get_package_path()
     extract(package_path)
-    append_third_lib(package_path)
+    append_third_party_lib(package_path)
     sublime.status_message("python-black: Third-party dependencies loaded")
